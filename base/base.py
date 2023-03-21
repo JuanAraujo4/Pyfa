@@ -10,7 +10,8 @@ def __conector():
                         password="1234",
                         database= "pyfa")
 
-def return_club_or_nation():
+def retorna_aleatorio():
+
     con = __conector()
     cur = con.cursor()
 
@@ -19,23 +20,23 @@ def return_club_or_nation():
     clubs_or_nation = pd.Series([club[0] for club in cur.fetchall()]).drop_duplicates().to_list()
 
     con.close()
-    return clubs
+    return clubs_or_nation
 
 
-def check_player_in_club(player, club_or_nation):
+def check_player_in_entity(entity, player):
     con = __conector()
     cur = con.cursor()
 
-    cur.execute("SELECT id, nome_curto, clube FROM player WHERE clube = %s OR nacionalidade = %s;",
-                (club_or_nation,club_or_nation))
+    cur.execute("SELECT id, nome_curto, clube FROM player WHERE clube = %s OR nacionalidade = %s;", 
+                (entity, entity)),
 
     dataframe = pd.DataFrame([dado for dado in cur.fetchall()], columns=["id", "jogador", "clube"])
     jogadores = dataframe["jogador"].to_list()
     con.close()
 
     for jogador in jogadores:
-        if player.lower() in jogador.lower():
-            return True
+        if player.lower() in jogador.lower().split(" "):
+            return True 
     return False
 
 
@@ -52,4 +53,3 @@ def return_player(player):
 
     con.close()
     return jogador
-
