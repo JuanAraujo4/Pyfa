@@ -1,17 +1,15 @@
-from time import sleep
-from base.base import return_player
+from base import base
+from flask import Flask, jsonify
 
-introducao = """----- Jogo Muito Massa -----"""
+app = Flask(__name__)
 
-print("-" * len(introducao))
+@app.route("/")
+def index():
+    return "Bem vindo a API do Pyfa!"
 
-for letra in introducao:
-    print(letra, end="")
-    if letra != " ":
-        sleep(0.22)
+@app.route("/joga/<entity>/<player>")
+def checa_se_jogador_esta_no_time_ou_selecao(entity, player):
+    check = base.check_player_in_entity(entity, player)
+    return jsonify(check)
 
-print()
-print("-" * len(introducao))
-
-print(return_player("haaland"))
-
+app.run(debug=True)
