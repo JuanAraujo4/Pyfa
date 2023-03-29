@@ -1,6 +1,7 @@
 import psycopg2 as psql
 import pandas as pd
 import warnings
+from random import randint
 
 warnings.filterwarnings("ignore")
 
@@ -15,41 +16,48 @@ def retorna_aleatorio():
     con = __conector()
     cur = con.cursor()
 
-    cur.execute("SELECT clube FROM player;")
+    cur.execute("SELECT nome FROM entities;")
 
     clubs_or_nation = pd.Series([club[0] for club in cur.fetchall()]).drop_duplicates().to_list()
+    al = randint(0,len(clubs_or_nation))
 
     con.close()
-    return clubs_or_nation
+    return clubs_or_nation[al]
 
 
-def check_player_in_entity(entity, player):
+def check_player_in_entity(entity:str, player:str):
     con = __conector()
     cur = con.cursor()
 
-    cur.execute("SELECT id, nome_curto, clube FROM player WHERE clube = %s OR nacionalidade = %s;", 
-                (entity, entity)),
+    cur.execute("SELECT id, nome_curto FROM " + entity.replace(" ", "_")),
 
-    dataframe = pd.DataFrame([dado for dado in cur.fetchall()], columns=["id", "jogador", "clube"])
+    dataframe = pd.DataFrame([dado for dado in cur.fetchall()], columns=["id", "jogador"])
     jogadores = dataframe["jogador"].to_list()
     con.close()
 
     for jogador in jogadores:
-        if player.lower() in jogador.lower().split(" "):
-            return True 
+        if player.lower() in jogador.lower().split(" ") or player.lower() == jogador.lower():
+            return True
     return False
 
 
-def return_player(player):
+def return_player(entity: str, player:str):
 
     player = player.capitalize().strip()
 
     con = __conector()
     cur = con.cursor()
 
-    cur.execute(f"SELECT * FROM player WHERE nome_curto LIKE '%{player}%';")
+    cur.execute(f"SELECT nome_curto, posicoes, overall FROM " + entity.replace(" ", "_"))
+    dataframe = pd.DataFrame([j for j in cur.fetchall()], columns=["id", "jogadores", "posicoes", "overall"])
+    jogadores = dataframe["jogadores"]
 
-    jogador = pd.DataFrame([j for j in cur.fetchall()])
-
+    procurado = ""
+    for jogador in jogadores:
+        if player.lower() in jogador.lower().split(" ") or player.lower() == jogador.lower():
+            procurado = jogador
+    
+    
+    
     con.close()
-    return jogador
+    return False

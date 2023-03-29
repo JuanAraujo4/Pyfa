@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane id="Tela" disable="false" focusTraversable="false" opacity="1.0" prefHeight="834.9998779296875" prefWidth="400.0" visible="true" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="pyfa.FXMLDocumentController">
+  <children>
+    <Label fx:id="label" alignment="CENTER" layoutX="14.0" layoutY="770.0" minHeight="16.0" minWidth="69.0" prefWidth="372.0" text="" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" height="799.9998779296875" layoutX="0.0" layoutY="0.0" stroke="BLACK" strokeType="INSIDE" width="400.0">
+      <fill>
+        <Color blue="0.240" green="0.600" red="0.000" fx:id="x1" />
+      </fill>
+    </Rectangle>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="771.9998779296875" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="372.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="$x1" height="744.0" layoutX="29.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" width="344.0" />
+    <Line endX="229.0" endY="1.0" layoutX="136.0" layoutY="400.0" startX="-113.0" startY="1.0" stroke="WHITE" strokeLineJoin="ROUND" strokeWidth="15.0" />
+    <Circle fill="WHITE" layoutX="200.0" layoutY="401.0" radius="27.25" stroke="WHITE" strokeType="INSIDE" />
+    <Line endX="75.0" fill="WHITE" layoutX="200.0" layoutY="705.0" startX="-75.0" stroke="WHITE" strokeWidth="10.0" />
+    <Line endX="0.0" endY="20.0" fill="WHITE" layoutX="125.0" layoutY="690.0" startX="0.0" startY="80.0" stroke="WHITE" strokeWidth="10.0" />
+    <Line endX="0.0" endY="20.0" fill="WHITE" layoutX="275.0" layoutY="692.0" startX="0.0" startY="80.0" stroke="WHITE" strokeWidth="10.0" />
+    <Line endX="75.0" fill="WHITE" layoutX="200.0" layoutY="95.0" startX="-75.0" stroke="WHITE" strokeWidth="10.0" />
+    <Line endX="0.0" endY="20.0" fill="WHITE" layoutX="125.0" layoutY="5.0" startX="0.0" startY="80.0" stroke="WHITE" strokeWidth="10.0" />
+    <Line endX="0.0" endY="20.0" fill="WHITE" layoutX="275.0" layoutY="5.0" startX="0.0" startY="80.0" stroke="WHITE" strokeWidth="10.0" />
+    <ImageView fx:id="gkImage" fitHeight="50.0" fitWidth="50.0" layoutX="175.0" layoutY="685.0" pickOnBounds="true" preserveRatio="true" style="&#10;" />
+    <ImageView fx:id="leImage" fitHeight="50.0" fitWidth="50.0" layoutX="47.0" layoutY="550.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="ldImage" fitHeight="50.0" fitWidth="50.0" layoutX="310.0" layoutY="550.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="175.0" layoutY="635.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="vol1Image" fitHeight="50.0" fitWidth="50.0" layoutX="105.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="vol2Image" fitHeight="50.0" fitWidth="50.0" layoutX="245.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="mei1Image" fitHeight="50.0" fitWidth="50.0" layoutX="130.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="mei2Image" fitHeight="50.0" fitWidth="50.0" layoutX="220.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="stImage" fitHeight="50.0" fitWidth="50.0" layoutX="175.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="peImage" fitHeight="50.0" fitWidth="50.0" layoutX="47.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="pdImage" fitHeight="50.0" fitWidth="50.0" layoutX="310.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" />
+    <TextField fx:id="entrada" layoutX="0.0" layoutY="800.0" prefHeight="34.9998779296875" prefWidth="400.0" />
+  </children>
+</AnchorPane>

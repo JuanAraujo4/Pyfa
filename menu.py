@@ -1,15 +1,18 @@
-from base import base
+from base.Time import Time 
+from base.Batalha import Batalha
 from flask import Flask, jsonify
+from os import system
 
-app = Flask(__name__)
 
-@app.route("/")
-def index():
-    return "Bem vindo a API do Pyfa!"
+def limpa_tela():
+    system("cls")
+    print(f"{'BATALHA DE TIMES':^119}\n")
+    
 
-@app.route("/joga/<entity>/<player>")
-def checa_se_jogador_esta_no_time_ou_selecao(entity, player):
-    check = base.check_player_in_entity(entity, player)
-    return jsonify(check)
+limpa_tela()
+TIME1 = Time(input("Qual é o nome do \033[04m1°Time\033[m? "))
+limpa_tela()
+TIME2 = Time(input("Qual é o nome do \033[04m2°Time\033[m? "))
+limpa_tela()
 
-app.run(debug=True)
+BATALHA = Batalha(TIME1, TIME2)

@@ -3,7 +3,7 @@ import pandas as pd
 import psycopg2 as psql
 
 SELECOES_FAVORITAS = ["Argentina", "Netherlands", "Poland", "France", "Belgium", 
-        "Germany", "England", "Senegal", "Norway", "Italy", "Croatia", "Spain"]
+        "Germany", "England", "Senegal", "Norway", "Italy", "Croatia", "Spain", "Brazil"]
 
 COLUNAS_NECESSARIAS_INGLES = ["Known As", "Full Name", "Positions Played", 
         "Overall", "Club Name", "Club Jersey Number", "Nationality", 
@@ -82,16 +82,18 @@ try:
     clubs = df["clube"].apply(lambda x: x).drop_duplicates()
 
     nations = df["nacionalidade"].apply(lambda x: x if x in SELECOES_FAVORITAS else "Brazil").drop_duplicates()
-    
+
     leagues = df["liga"].apply(lambda x: x).drop_duplicates()
     
     entities = pd.concat([nations, leagues, clubs]).to_list()
-
+    
+    entities.append("All_Players") # Adicionando 'All_Players', tabela que tem todos os jogadores.
+    
     id = 0
     for entity in entities:
         id += 1
         query = "INSERT INTO entities values (%s, %s);"
-        cursor.execute(query, (id, entity))
+        cursor.execute(query, (id, entity.replace("_", " ")))
 
     # Criando uma tabela para cada time.
     for entity in entities:
@@ -118,18 +120,22 @@ try:
         dados = [player for player in player]
         dados.insert(0, id)
         
+        cursor.execute("INSERT INTO All_Players values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", dados)
+
         time = player[4]
         
         cursor.execute("INSERT INTO " + time + " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", dados)
         
+        liga = player[-1]
+
+        cursor.execute("INSERT INTO " + liga + " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", dados)
+
         nation = player[6]
         if nation in SELECOES_FAVORITAS:
-            cursor.execute("INSERT INTO " + nation + " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", dados)
-        
-    
+            cursor.execute("INSERT INTO " + nation + " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", dados) 
 
 except psql.DatabaseError:
-    print("\033[31mNao foi possivel conectar ao banco de dados.\033[m")
+  print("\033[31mNao foi possivel conectar ao banco de dados.\033[m")
 
 except FileNotFoundError:
     print(f'\033[31mO arquivo "{CSV}" nao foi encontrado.\033[m')
