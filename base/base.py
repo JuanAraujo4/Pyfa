@@ -2,8 +2,10 @@ import psycopg2 as psql
 import pandas as pd
 import warnings
 from random import randint
+from base.constantes import ENTIDADES
 
 warnings.filterwarnings("ignore")
+
 
 def __conector():
     return psql.connect(host="localhost",
@@ -13,16 +15,9 @@ def __conector():
 
 def retorna_aleatorio():
 
-    con = __conector()
-    cur = con.cursor()
+    al = randint(0, len(ENTIDADES)) - 1
 
-    cur.execute("SELECT nome FROM entities;")
-
-    clubs_or_nation = pd.Series([club[0] for club in cur.fetchall()]).drop_duplicates().to_list()
-    al = randint(0,len(clubs_or_nation))
-
-    con.close()
-    return clubs_or_nation[al]
+    return ENTIDADES[al]
 
 
 def check_player_in_entity(entity:str, player:str):
@@ -48,16 +43,20 @@ def return_player(entity: str, player:str):
     con = __conector()
     cur = con.cursor()
 
-    cur.execute(f"SELECT nome_curto, posicoes, overall FROM " + entity.replace(" ", "_"))
-    dataframe = pd.DataFrame([j for j in cur.fetchall()], columns=["id", "jogadores", "posicoes", "overall"])
-    jogadores = dataframe["jogadores"]
+    cur.execute(f"SELECT id, nome_curto, nomecompleto, posicoes, overall FROM " + entity.replace(" ", "_"))
+    dataframe = pd.DataFrame([j for j in cur.fetchall()], columns=["id", "nome", "nomecompleto", "posicoes", "overall"])
+    
 
-    procurado = ""
-    for jogador in jogadores:
-        if player.lower() in jogador.lower().split(" ") or player.lower() == jogador.lower():
-            procurado = jogador
-    
-    
-    
+    for jogador in dataframe.iterrows():
+        info = jogador[1]
+        nomeCurto = info[1].lower()
+        nomeCompleto = info[2].lower()
+
+        retorna = {"id": info[0], "nomeCurto": info[1], "nomeCompleto": info[2], "posicoes": info[3], "overall": info[4]}
+        if player.lower() in nomeCurto.split(" ") or player.lower() == nomeCurto:
+            return retorna
+        elif player.lower() in nomeCompleto.split(" ") or player.lower() == nomeCompleto:
+            return retorna
+        
     con.close()
     return False
