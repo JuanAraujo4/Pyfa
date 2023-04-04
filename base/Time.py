@@ -1,28 +1,30 @@
 from base.base import return_player
+from base.Jogador import Jogador
 
 class Time:
     def __init__(self, nome):
         self.nome = nome
-        self.jogadores = {"GOL": [None], "LE":[None], "ZAG":[None]*2, "LD": [None], "VOL": [None],
-                          "ME":[None], "MD": [None], "PE": [None], "CA":[None], "PD": [None]}
+        self.jogadores = {"GOL": [None], "LD":[None], "ZAG":[None]*2, "LE": [None], "VOL": [None],
+                          "MD":[None], "ME": [None], "PD": [None], "CA":[None], "PE": [None]}
 
-    def getNome(self):
+    def getNome(self) -> str:
         return self.nome
 
-    def getJogadores(self):
-        jogadores = []
+    def getJogadores(self) -> dict:
+        jogadores = {"nome":[], "overall":[]}
 
         for area in self.jogadores.values():
             for jogador in area:
-                jogadores.append(jogador if jogador else "")
+                jogadores["nome"].append(jogador.getNome() if jogador else "")
+                jogadores["overall"].append(jogador.getOver() if jogador else "")
                 
         return jogadores
     
-    def addPosicao(self, jogador, posicao):
+    def addPosicao(self, jogador, posicao) -> None:
         self.jogadores[posicao][self.jogadores[posicao].index(None)] = \
-            jogador["nomeCurto"]
+            jogador
     
-    def checaPosicao(self, posicao):
+    def checaPosicao(self, posicao) -> bool:
         try:
             self.jogadores[posicao].index(None)
         except Exception:
@@ -30,10 +32,12 @@ class Time:
         else:
             return True
 
-    def addJogador(self, time, escolha):
+    def addJogador(self, time, escolha) -> bool:
         jogador = return_player(time, escolha)
         posicoes = jogador["posicoes"].split(",")
         nomeJogador = jogador["nomeCurto"]
+
+        jogador = Jogador(jogador["id"], jogador["nomeCurto"], jogador["overall"])
 
         posicoesPossiveis = []
         for posicao in posicoes:
