@@ -5,10 +5,19 @@ class Time:
     def __init__(self, nome):
         self.nome = nome
         self.jogadores = {"GOL": [None], "LD":[None], "ZAG":[None]*2, "LE": [None], "VOL": [None],
-                          "MD":[None], "ME": [None], "PD": [None], "CA":[None], "PE": [None]}
+                          "MEI":[None]*2, "PD": [None], "CA":[None], "PE": [None]}
 
     def getNome(self) -> str:
         return self.nome
+    
+    def mediaOver(self) -> str:
+        soma = 0
+        for list in self.jogadores.values():
+            for j in list:
+                soma += j.getOver()
+        
+        return int(soma / 11)
+
 
     def getJogadores(self) -> dict:
         jogadores = {"nome":[], "overall":[]}
@@ -62,15 +71,10 @@ class Time:
                 if self.checaPosicao("VOL"):
                     posicoesPossiveis.append("VOL")
             
-            if posicao in ["LM", "CAM", "CM"]:
-                if self.checaPosicao("MD"):
-                    if "MD" not in posicoesPossiveis:
-                        posicoesPossiveis.append("MD")
-                    
-            if posicao in ["RM", "CAM", "CM"]:
-                if self.checaPosicao("ME"):
-                    if "ME" not in posicoesPossiveis:
-                        posicoesPossiveis.append("ME")
+            if posicao in ["RM", "LM", "CAM", "CM"]:
+                if self.checaPosicao("MEI"):
+                    if "MEI" not in posicoesPossiveis:
+                        posicoesPossiveis.append("MEI")
 
             if posicao in ["RW", "RF"]:
                 if self.checaPosicao("PD"):
@@ -97,7 +101,7 @@ class Time:
             while posicaoEscolhida not in posicoesPossiveis:
                 print(f"\n\033[31mEscolha uma dessas posicoes {posicoesPossiveis}\033[m]")
 
-                posicaoEscolhida = input(f"Qual posição deseja colocar o \033[04m{nomeJogador}\033[m? ")
+                posicaoEscolhida = input(f"Qual posição deseja colocar o \033[04m{nomeJogador}\033[m? ").strip().upper()
 
             self.addPosicao(jogador, posicaoEscolhida)
             return True

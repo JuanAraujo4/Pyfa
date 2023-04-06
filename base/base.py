@@ -24,13 +24,17 @@ def check_player_in_entity(entity:str, player:str):
     con = __conector()
     cur = con.cursor()
 
-    cur.execute("SELECT id, nome_curto FROM " + entity.replace(" ", "_")),
+    cur.execute("SELECT id, nome_curto, nomecompleto FROM " + entity.replace(" ", "_").replace("-", "_")),
 
-    dataframe = pd.DataFrame([dado for dado in cur.fetchall()], columns=["id", "jogador"])
-    jogadores = dataframe["jogador"].to_list()
+    dataframe = pd.DataFrame([dado for dado in cur.fetchall()], columns=["id", "nome_curto", "nomecompleto"])
+    jogadoresNomeCurto = dataframe["nome_curto"].to_list()
+    jogadoresNomeCompleto = dataframe["nomecompleto"].to_list()
     con.close()
 
-    for jogador in jogadores:
+    for jogador in jogadoresNomeCurto:
+        if player.lower() in jogador.lower().split(" ") or player.lower() == jogador.lower():
+            return True
+    for jogador in jogadoresNomeCompleto:
         if player.lower() in jogador.lower().split(" ") or player.lower() == jogador.lower():
             return True
     return False
@@ -43,7 +47,7 @@ def return_player(entity: str, player:str):
     con = __conector()
     cur = con.cursor()
 
-    cur.execute(f"SELECT id, nome_curto, nomecompleto, posicoes, overall FROM " + entity.replace(" ", "_"))
+    cur.execute(f"SELECT id, nome_curto, nomecompleto, posicoes, overall FROM " + entity.replace(" ", "_").replace("-", "_"))
     dataframe = pd.DataFrame([j for j in cur.fetchall()], columns=["id", "nome", "nomecompleto", "posicoes", "overall"])
     
 

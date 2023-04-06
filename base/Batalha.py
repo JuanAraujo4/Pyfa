@@ -1,25 +1,26 @@
 from os import system 
 from base.base import retorna_aleatorio, check_player_in_entity
+from base.Time import Time 
 
 class Batalha:
-    def __init__(self, timeCasa, timeFora):
+    def __init__(self, timeCasa:Time, timeFora:Time):
         self.timeCasa = timeCasa
         self.timeFora = timeFora
         self.montarTimes()
-        self.sorteados = []
 
     def montarTimes(self) -> None:
         times = [self.timeCasa, self.timeFora]
+        sorteados = []
         for _ in range(1,11+1):
             for time in times:
                 self.mostraTimes()
                 
                 time_aleatorio = retorna_aleatorio()
                 
-                while time_aleatorio in self.sorteados():
+                while time_aleatorio in sorteados:
                     time_aleatorio = retorna_aleatorio()
                 
-                self.sorteados.append(time_aleatorio)
+                sorteados.append(time_aleatorio)
 
                 while True:
                     if time == self.timeCasa:
@@ -38,7 +39,20 @@ class Batalha:
                     else:
                         print(f"\033[31mNão há jogadores com esse nome no(a) {time_aleatorio}\033[m")
                         continue
-                
+
+        self.mostraTimes()
+        tcOver = str(self.timeCasa.mediaOver())
+        tfOver = str(self.timeFora.mediaOver())
+        if int(tcOver) > int(tfOver):
+            print(f"\n\033[32m{'Total: ' + tcOver:<70} \033[31m{tfOver + ' :Total':>70}\033[m")
+            print(f"O time {self.timeCasa.getNome()} ganhou!")
+        elif int(tcOver) < int(tfOver):
+            print(f"\n\033[31m{'Total: ' + tcOver:<70} \033[32m{tfOver + ' :Total':>70}\033[m")
+            print(f"O time {self.timeFora.getNome()} ganhou!")
+        else:
+            print(f"{'Total: ' + tcOver:<70} {tfOver + ' :Total':>70}")
+            print("Deu empate!")
+
     
     def mostraTimes(self) -> None:
         tcNome = self.timeCasa.getNome()
@@ -49,10 +63,10 @@ class Batalha:
         system("cls")
         print(f"{'BATALHA DE TIMES':^119}\n")
         
-        print(f"\033[34m{tcNome:<10}\033[m{' ':^99}\033[31m{tfNome:>10}\033[m\n")
-        ps = ["GO", "LD", "ZA", "ZA", "LE", "VO", "MD", "ME", "PD", "CA", "PE"]
+        print(f"{tcNome:<70} {tfNome:>70}")
+        ps = ["GO", "LD", "ZA", "ZA", "LE", "VO", "ME", "ME", "PD", "CA", "PE"]
 
         for i in range(0, 11):
             print(f"{ps[i]}: {tcJoga['nome'][i]:<44}{tcJoga['overall'][i]:>10}", end="")
             print(' - ', end="")
-            print(f"{tfJoga['nome'][i]:<10}{tfJoga['overall'][i]:>44} :{ps[i]}")       
+            print(f"{tfJoga['overall'][i]:<10}{tfJoga['nome'][i]:>44} :{ps[i]}")       

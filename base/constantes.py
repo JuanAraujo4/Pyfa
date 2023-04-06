@@ -1,11 +1,10 @@
 COLUNAS_NECESSARIAS_INGLES = ["Known As", "Full Name", "Positions Played", 
-        "Overall", "Club Name", "Club Jersey Number", "Nationality", 
-        "Pace Total", "Shooting Total", "Passing Total", "Dribbling Total", 
-        "Defending Total", "Physicality Total", "Image Link", 
-        "National Team Image Link"]
+        "Overall", "Club Name", "Nationality", "Pace Total", "Shooting Total", 
+        "Passing Total", "Dribbling Total", "Defending Total", "Physicality Total", 
+        "Image Link", "National Team Image Link"]
 
 COLUNAS_NECESSARIAS = ["nomeCurto", "nomeCompleto", "posicoes", "overall", "clube",
-                       "numeroCamisa", "nacionalidade", "pique", "chute", "passe", 
+                       "nacionalidade", "pique", "chute", "passe", 
                        "drible", "defesa", "fisico", "faceUrl", "selecaoLogoUrl"]
 CLUBES_FAVORITOS = ['Paris Saint-Germain', 'FC Bayern München', 'Manchester United', 
                   'Manchester City', 'Aston Villa', 'Atlético de Madrid', 'FC Barcelona', 
@@ -13,7 +12,7 @@ CLUBES_FAVORITOS = ['Paris Saint-Germain', 'FC Bayern München', 'Manchester Uni
                   'Juventus', 'Inter', 'Napoli', 'Arsenal', 'AC Milan', 'FC Porto',
                   'RB Leipzig', 'Newcastle United', 'SL Benfica']
 
-SELECOES_FAVORITAS = ["Argentina", "Netherlands", "Poland", "France", "Belgium", 
+SELECOES_FAVORITAS = ["Argentina", "Netherlands", "Poland", "France", "Belgium", "Portugal", "Uruguay",
         "Germany", "England", "Senegal", "Norway", "Italy", "Croatia", "Spain", "Brazil"]
 
 TODOS_JOGADORES = ["All Players"]
